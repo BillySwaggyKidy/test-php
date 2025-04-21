@@ -39,41 +39,57 @@ code source de vos projets d'études ou projets perso.
 
 Bonne chance !
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+C'est une maquette d'un page de contact d'une agence immobilière développpé avec le framework Next.js.
 
-## Getting Started
+# Rendu
 
-First, run the development server:
+En premier, installer les paquets npm nécessaires du projet:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ensuite lancer le docker-compose.yml (pensez à avoir démarrer docker avant):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+docker compose up -d
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Les environnements
 
-## Learn More
+Il faut savoir que le projet possède deux environnements, un pour le développement et un pour le déploiement en production.
 
-To learn more about Next.js, take a look at the following resources:
+### Mode développement:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Pour lancer l'application next.js en mode développement, exécuter:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+npm run dev
+```
 
-## Deploy on Vercel
+Les liens sont les suivants:
+- http://localhost:3000 est le lien url pour accèder à l'application web dans le navigateur
+- http://localhost:8080 est le lien url pour accèder au portail phpmyadmin (host: root, password: verysecurepassword) et le nom de la base de donnée est: maquette_db_dev
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Mode production:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Pour lancer l'application next.js en mode production, exécuter:
+
+```
+npm run build
+```
+```
+npm run start
+```
+
+Les liens sont les suivants:
+- http://localhost:3000 est le lien url pour accèder à l'application web dans le navigateur
+- http://localhost:8081 est le lien url pour accèder au portail phpmyadmin (host: root, password: verysecurepassword) et le nom de la base de donnée est: maquette_db_prod
+
+
+
+
+
