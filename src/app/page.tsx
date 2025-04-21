@@ -19,12 +19,12 @@ export default function Home() {
     availabilities: [],
     reason: "",
     message: ""
-  });
+  }); // represent the data form of the page
   const [formUiStates, setFormUiStates] = useState<FormDisplayUiStates>({
     errorText: false,
     disableButton: false,
     msgBox: false
-  });
+  }); // controls form elements like showing errors, disabling the button, or showing a message box.
   
   const handleChange = (id: string, value: string | AvailabilityVisitType[]) => {
     const newForm = {...form, [id]:value};
@@ -32,6 +32,7 @@ export default function Home() {
   }
 
   const verifyForm = (form: ContactFormValues) => {
+    // we check that every value or array are not empty
     return Object.values(form).every((value)=>{
       if (typeof value === "string") {
         return value !== "";
@@ -43,7 +44,7 @@ export default function Home() {
   }
 
   const submitForm = async () => {
-    if (verifyForm(form)) {
+    if (verifyForm(form)) { // we check if all the form's fields are filled
       const response = await fetch(`${apiUrl}/contact`, {
         method: "POST",
         mode: "cors",
@@ -55,10 +56,13 @@ export default function Home() {
         body: JSON.stringify(form)
       });
       if (response.ok) {
+        // if we did send the form then we disable the error text, we disable the button so that the user can't send twice 
+        // and we display a message to tell that the server received the data
         setFormUiStates({errorText: false, disableButton: true, msgBox: true});
       }
     }
     else {
+      // if the form is not complete then we display an error text at the bottom of the submit button
       setFormUiStates({...formUiStates, errorText: true});
     }
   }
@@ -86,7 +90,7 @@ export default function Home() {
             <div className="col-start-3 row-start-3 w-full h-full flex flex-row items-start justify-center">
               {
                 formUiStates.errorText &&
-                <p className="text-red-500 text-shadow-[0_0_6px_#FFFFFF] text-center text-md font-bold">Veillez remplir tous les champs du formulaire</p>
+                <p className="text-red-500 text-shadow-[0_0_6px_#FFFFFF] text-center text-md font-bold">Veuillez remplir tous les champs du formulaire</p>
               }
             </div>
           </div>

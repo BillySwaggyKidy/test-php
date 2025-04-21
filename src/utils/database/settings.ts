@@ -1,11 +1,12 @@
 import { IDBSettings } from "@/types/common"
 
+// this function is used to give the database connect settings depending of the env variables (dev, prod)
 export const GetDBSettings = (): IDBSettings => {
     const env = process.env.NODE_ENV
   
     if (env == 'development')
       return {
-        host: process.env.host_dev!, //'58.84.143.251',
+        host: process.env.host_dev!,
   
         port: parseInt(process.env.port_dev!),
   
@@ -17,7 +18,7 @@ export const GetDBSettings = (): IDBSettings => {
       }
     else
       return {
-        host: process.env.host_prod!, //'58.84.143.251',
+        host: process.env.host_prod!,
   
         port: parseInt(process.env.port_prod!),
   

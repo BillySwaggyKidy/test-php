@@ -1,20 +1,12 @@
-// import the Request and Response classes
-
 import { NextResponse, NextRequest } from 'next/server'
-
-// import mysql2/promise for mysql connectivity
 
 import mysql, { QueryResult, ResultSetHeader } from 'mysql2/promise'
 import { GetDBSettings } from '@/utils/database/settings'
 import { ContactFormValues } from '@/types/form';
 
-
-// 1. populate the connection parameters
-
 const connectionParams = GetDBSettings();
 
-// define and export the GET handler function
-
+// handle request to get the visits data
 export async function GET() {
     try {
         const connection = await mysql.createConnection(connectionParams);
@@ -36,9 +28,10 @@ export async function GET() {
     }
 }
 
+// handle request to add a new contact request to the database
 export async function POST(req: NextRequest) {
     try {
-        const body: ContactFormValues = await req.json()
+        const body: ContactFormValues = await req.json(); // we retrieved the contact form data from the body
     
         const {
           gender,
@@ -53,25 +46,27 @@ export async function POST(req: NextRequest) {
     
         const connection = await mysql.createConnection(connectionParams);
 
+        // first we check if the data we send are not already inside the contact table (to prevent duplicates)
         const [rows] = await connection.execute(
             `SELECT * FROM contact WHERE gender = ? AND name = ? AND lastName = ? AND email = ? AND phone = ? AND reason = ? AND message = ?`,
             [gender, name, lastName, email, phone, reason, message]
         );
           
-          if ((rows as QueryResult[]).length > 0) {
-            return NextResponse.json({ message: 'Duplicate entry' }, { status: 409 })
-          }
+        if ((rows as QueryResult[]).length > 0) { // if an entry exist with the same data then we don't go further
+          return NextResponse.json({ message: 'Duplicate entry' }, { status: 409 })
+        }
     
-        // 1. Insert into contact
+        // we insert into the contact table the user info, reason and message
         const [contactResult] = await connection.execute(
           `INSERT INTO contact (gender, name, lastName, email, phone, reason, message)
            VALUES (?, ?, ?, ?, ?, ?, ?)`,
           [gender, name, lastName, email, phone, reason, message]
-        )
+        );
+        
+        // we retrieved the id of the entry we just inserted inside the contact table
+        const contactId = (contactResult as ResultSetHeader).insertId;
     
-        const contactId = (contactResult as ResultSetHeader).insertId
-    
-        // 2. Insert into availability
+        // we insert into the availability table all the availability data of the user
         if (Array.isArray(availabilities)) {
           for (const availability of availabilities) {
             const slot = availability.day + " à " + availability.time;
@@ -79,7 +74,7 @@ export async function POST(req: NextRequest) {
               `INSERT INTO availability (contact_id, slot)
                VALUES (?, ?)`,
               [contactId, slot]
-            )
+            );
           }
         }
     

@@ -10,6 +10,6 @@ export default function TextArea({id, label, value = "", callback} : {id:string,
     }
 
     return (
-        <textarea className="h-full w-full pt-4 pl-8 bg-white rounded-3xl placeholder:text-gray-400 text-lg" id={id} placeholder={label} value={textarea} onChange={handleTextArea}/>
+        <textarea className="h-full w-full pt-4 pl-8 bg-white rounded-3xl placeholder:text-gray-400 text-sm sm:text-lg" id={id} placeholder={label} value={textarea} onChange={handleTextArea}/>
     );
 }

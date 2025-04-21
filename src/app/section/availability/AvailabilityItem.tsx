@@ -1,5 +1,5 @@
 
-
+// represent a availability to be contact by the agency, it can be removed from the list by clicking on the X button
 export default function AvailabilityItem({index, day, time, removeBack} : {index:number, day:string, time:string, removeBack:(availableIndex: number)=>void}) {
 
     const handleClick = () => {

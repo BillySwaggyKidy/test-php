@@ -1,3 +1,6 @@
+// this component represent a modal kind type of notification that take the entire screen with a semi-transparent background 
+// and display a custom message to the user
+// it can be instantly closed by clicking anywhere
 export default function QuickMsgBox({title, subTitle, textColor, close}: {title:string, subTitle?:string, textColor:string, close:()=>void}) {
     return (
         <div className="fixed inset-0 bg-gray-500/70 bg-opacity-60 overflow-y-auto h-full w-full z-50" onClick={close}>

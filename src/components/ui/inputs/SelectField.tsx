@@ -12,7 +12,7 @@ export default function SelectField({id, label, selectContent, value, callback} 
     }
 
     return (
-        <select className="h-full w-full bg-white rounded-3xl text-gray-400 pl-4 text-xl"
+        <select className="h-full w-full bg-white rounded-3xl text-gray-400 pl-4 text-sm sm:text-xl"
             id={id} name={id} value={selectValue} onChange={handleSelectChange}
         >
             <option value="">{label}</option>
